@@ -30,10 +30,10 @@ public class Form103Model {
 
         Form103XlsCellBodyDescription bodyDescription1 = new Form103XlsCellBodyDescription(
                 1,
-                "",
+                "КАПБАРОВА ХАТИРА ЖАРЫЛКАСЫНОВНА",
                 160002,
-                "",
-                "",
+                "МКР.САУЛЕ НОВОСТРОЙКИ 29, -,Абайский район,Шымкент Г.А./Южно-Казахстанская область,160002",
+                "WW123321123321",
                 0.020,
                 0,
                 0,
@@ -46,10 +46,10 @@ public class Form103Model {
 
         Form103XlsCellBodyDescription bodyDescription2 = new Form103XlsCellBodyDescription(
                 2,
-                "",
+                "КАПБАРОВА ХАТИРА ЖАРЫЛКАСЫНОВНА",
                 160002,
-                "",
-                "",
+                "МКР.САУЛЕ НОВОСТРОЙКИ 29, -,Абайский район,Шымкент Г.А./Южно-Казахстанская область,160002",
+                "WW123321123321",
                 0.020,
                 0,
                 0,
@@ -62,10 +62,10 @@ public class Form103Model {
 
         Form103XlsCellBodyDescription bodyDescription3 = new Form103XlsCellBodyDescription(
                 3,
-                "",
+                "КАПБАРОВА ХАТИРА ЖАРЫЛКАСЫНОВНА",
                 160002,
-                "",
-                "",
+                "МКР.САУЛЕ НОВОСТРОЙКИ 29, -,Абайский район,Шымкент Г.А./Южно-Казахстанская область,160002",
+                "WW123321123321",
                 0.020,
                 0,
                 0,
@@ -77,10 +77,10 @@ public class Form103Model {
         );
         Form103XlsCellBodyDescription bodyDescription4 = new Form103XlsCellBodyDescription(
                 4,
-                "",
+                "КАПБАРОВА ХАТИРА ЖАРЫЛКАСЫНОВНА",
                 160002,
-                "",
-                "",
+                "МКР.САУЛЕ НОВОСТРОЙКИ 29, -,Абайский район,Шымкент Г.А./Южно-Казахстанская область,160002",
+                "WW123321123321",
                 0.020,
                 0,
                 0,
