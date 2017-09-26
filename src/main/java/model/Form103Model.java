@@ -12,6 +12,7 @@ public class Form103Model {
 
     public Form103XlsSheet getSheet() {
         Form103XlsSheet form103XlsSheet = new Form103XlsSheet();
+        form103XlsSheet.setFileName("form103");
         Form103XlsCellHeaderDescription headerDescription = new Form103XlsCellHeaderDescription(
                 1,
                 2,
@@ -41,7 +42,6 @@ public class Form103Model {
                 "87475132264",
                 "87412323684",
                 "kalenov.n@gmail.com"
-
         );
 
         Form103XlsCellBodyDescription bodyDescription2 = new Form103XlsCellBodyDescription(
