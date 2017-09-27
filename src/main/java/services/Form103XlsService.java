@@ -1,6 +1,7 @@
 package services;
 
 import entities.Form103XlsCellBodyDescription;
+import entities.Form103XlsInfo;
 import entities.Form103XlsSheet;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -13,6 +14,9 @@ import java.io.*;
 
 public class Form103XlsService {
 
+    private static final String XLS_FILE_FORMAT = ".xls";
+    private static final int FTP_PORT = 21;
+
     public void generateForm103XlsFile(Form103XlsSheet form103XlsSheet) {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Form103");
@@ -20,10 +24,10 @@ public class Form103XlsService {
         createXlsHeaderPart(form103XlsSheet, sheet);
         createXlsBodyPart(workbook, sheet);
 
-        int r = 8;
+        int rowOrder = 8;
         for (Form103XlsCellBodyDescription f : form103XlsSheet.getForm103XlsCellBodyDescription()) {
 
-            Row row = sheet.createRow(r);
+            Row row = sheet.createRow(rowOrder);
 
             row.createCell(0).setCellValue(f.getRecipientId());
             row.createCell(1).setCellValue(f.getAddressee());
@@ -38,7 +42,7 @@ public class Form103XlsService {
             row.createCell(10).setCellValue(f.getPhoneNumberSecond());
             row.createCell(11).setCellValue(f.getEmail());
 
-            r++;
+            rowOrder++;
         }
 
         for (int i = 0; i < 12; i++) {
@@ -47,7 +51,7 @@ public class Form103XlsService {
 
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream(new File(form103XlsSheet.getFileName() + ".xls"));
+            out = new FileOutputStream(new File(form103XlsSheet.getForm103XlsInfo().getFileName() + XLS_FILE_FORMAT));
             workbook.write(out);
 
 
@@ -57,12 +61,13 @@ public class Form103XlsService {
             e.printStackTrace();
         }
         try {
-
             out.close();
             workbook.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        uploadFile(form103XlsSheet.getForm103XlsInfo());
 
     }
 
@@ -142,45 +147,48 @@ public class Form103XlsService {
         rowAllRegisteredMail.createCell(1).setCellValue(form103XlsSheet.getForm103XlsCellHeaderDescription().getAllRegisteredMail());
     }
 
-    public void uploadFile() {
+    private void uploadFile(Form103XlsInfo form103XlsInfo) {
         File file = null;
         FileInputStream uploadFile = null;
         FTPClient ftpClient = new FTPClient();
-        String user = "";
-        String password = "";
-        String ftpServer = "172.30.75.125";
+
+        String user = form103XlsInfo.getFtpUser();
+        String password = form103XlsInfo.getFtpPassword();
+        String ftpServer = form103XlsInfo.getFtpAddress();
 
         try {
 
-            ftpClient.connect(ftpServer, 21);
+            ftpClient.connect(ftpServer, FTP_PORT);
             ftpClient.login(user, password);
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-            file =  new File("form103.xls");
+            file = new File(form103XlsInfo.getFileName() + XLS_FILE_FORMAT);
             uploadFile = new FileInputStream(file);
 
-            String pathAndNameUploadFile = "/test/form103.xls";
-            boolean done = ftpClient.storeFile(pathAndNameUploadFile , uploadFile);
+            String pathAndNameUploadFile = form103XlsInfo.getFilePath() + "/" + form103XlsInfo.getFileName() + XLS_FILE_FORMAT;
 
-            System.out.println(done);
+            boolean done = ftpClient.storeFile(pathAndNameUploadFile, uploadFile);
+            if(done){
+                System.out.println("Файл загружен");
+            }else{
+                System.out.println("Файл не загружен");
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (ftpClient.isConnected()) {
-                try {
-
-                    uploadFile.close();
-                    file.delete();
+            try {
+                uploadFile.close();
+                file.delete();
+                if (ftpClient.isConnected()) {
                     ftpClient.logout();
                     ftpClient.disconnect();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
     }
-
 }
+
+

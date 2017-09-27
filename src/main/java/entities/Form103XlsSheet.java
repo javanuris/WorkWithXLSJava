@@ -6,7 +6,7 @@ public class Form103XlsSheet {
 
     private Form103XlsCellHeaderDescription form103XlsCellHeaderDescription;
     private List<Form103XlsCellBodyDescription> form103XlsCellBodyDescription;
-    private String fileName;
+    private Form103XlsInfo form103XlsInfo;
 
     public Form103XlsSheet(){
 
@@ -28,11 +28,11 @@ public class Form103XlsSheet {
         this.form103XlsCellBodyDescription = form103XlsCellBodyDescription;
     }
 
-    public String getFileName() {
-        return fileName;
+    public Form103XlsInfo getForm103XlsInfo() {
+        return form103XlsInfo;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setForm103XlsInfo(Form103XlsInfo form103XlsInfo) {
+        this.form103XlsInfo = form103XlsInfo;
     }
 }

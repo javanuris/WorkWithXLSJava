@@ -2,6 +2,7 @@ package model;
 
 import entities.Form103XlsCellBodyDescription;
 import entities.Form103XlsCellHeaderDescription;
+import entities.Form103XlsInfo;
 import entities.Form103XlsSheet;
 
 import java.util.ArrayList;
@@ -12,7 +13,16 @@ public class Form103Model {
 
     public Form103XlsSheet getSheet() {
         Form103XlsSheet form103XlsSheet = new Form103XlsSheet();
-        form103XlsSheet.setFileName("form103");
+
+        Form103XlsInfo form103XlsInfo = new Form103XlsInfo();
+        form103XlsInfo.setFileName("form103");
+        form103XlsInfo.setFilePath("/test");
+        form103XlsInfo.setFtpUser("gepadmin");
+        form103XlsInfo.setFtpPassword("6Wh6gzLX");
+        form103XlsInfo.setFtpAddress("172.30.75.125");
+
+        form103XlsSheet.setForm103XlsInfo(form103XlsInfo);
+
         Form103XlsCellHeaderDescription headerDescription = new Form103XlsCellHeaderDescription(
                 1,
                 2,
