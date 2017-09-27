@@ -48,6 +48,8 @@ public class Form103XlsService {
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(new File(form103XlsSheet.getFileName() + ".xls"));
+            workbook.write(out);
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -55,7 +57,7 @@ public class Form103XlsService {
             e.printStackTrace();
         }
         try {
-            workbook.write(out);
+
             out.close();
             workbook.close();
         } catch (IOException e) {
@@ -141,29 +143,38 @@ public class Form103XlsService {
     }
 
     public void uploadFile() {
+        File file = null;
+        FileInputStream uploadFile = null;
         FTPClient ftpClient = new FTPClient();
-        String user = "gepadmin";
-        String password = "6Wh6gzLX";
+        String user = "";
+        String password = "";
         String ftpServer = "172.30.75.125";
 
         try {
 
-
             ftpClient.connect(ftpServer, 21);
             ftpClient.login(user, password);
             ftpClient.enterLocalPassiveMode();
-            ftpClient.setFileTransferMode(FTP.BINARY_FILE_TYPE);
-            System.out.println(ftpClient.isConnected());
-            
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            file =  new File("form103.xls");
+            uploadFile = new FileInputStream(file);
 
+            String pathAndNameUploadFile = "/test/form103.xls";
+            boolean done = ftpClient.storeFile(pathAndNameUploadFile , uploadFile);
+
+            System.out.println(done);
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (ftpClient.isConnected()) {
                 try {
+
+                    uploadFile.close();
+                    file.delete();
                     ftpClient.logout();
                     ftpClient.disconnect();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
